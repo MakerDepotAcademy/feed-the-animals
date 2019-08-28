@@ -4,7 +4,6 @@ from threading import Thread, Lock
 import re
 
 class Board():
-  
   def __init__(self, port, qu=32):
     self._ser = serial.Serial(str(port), 2000000, timeout=1)
     self._ser.flushInput()
@@ -28,7 +27,7 @@ class Board():
 
       if len(line) == 0 or last == line:
         continue
-      
+
       for i, (c, l) in enumerate(zip(line, last)):
         if c != l:
           for hook, pin in self._hooks:
@@ -70,16 +69,16 @@ class Board():
 
   def getID(self):
     return self._prompt('?')
-    
+
   def getLocation(self):
     return self._prompt('l')
-  
+
   def getPorts(self):
     return self._prompt('r')
 
   def onChange(self, hook, pin=-1):
     self._hooks.append((hook, pin))
-    
+
     if pin == -1:
       self.queue = 'e' * self._queuelen
     else:
@@ -118,7 +117,7 @@ class Board():
           return l
       raise Exception('Timeout')
 
-    
+
     for p in pins:
       self.setInput(p)
 
@@ -127,13 +126,13 @@ class Board():
     while not last:
       last = readline()
       last = '' if not m(last) else last
-      
+
     while True:
       l = readline()
       if l == last:
         continue
-      
-      if m(l): 
+
+      if m(l):
         for p in pins:
           p -= 1
           if l[p] != last[p]:
@@ -142,7 +141,7 @@ class Board():
         last = l
 
 class Manager():
-  
+
   def __init__(self):
     # ls /dev/ttyACM*
     self._boards = {}
