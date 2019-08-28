@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 from hole import HoleManager
 from lib import Manager
 from time import sleep
