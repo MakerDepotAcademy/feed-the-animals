@@ -35,8 +35,8 @@ class HoleManager(): # Pimp
       print(t._detect)
     self.run()
 
-  def awaitHit(self):
-    return self._board.awaitChange([i._detect for i in self.the_chosen_ones], 20)
+  def awaitHit(self, timeout=20):
+    return self._board.awaitChange([i._detect for i in self.the_chosen_ones], timeout)
 
   def reset(self):
     [i.reset() for i in self.the_chosen_ones]
